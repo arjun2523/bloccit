@@ -9,6 +9,7 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
+    authorize @post
   end
   def create
      @post = current_user.posts.build(params.require(:post).permit(:title, :body))
@@ -22,9 +23,11 @@ class PostsController < ApplicationController
   end
   def edit
     @post = Post.find(params[:id])
+    authorize @post
   end
   def update
     @post = Post.find(params[:id])
+    authorize @post
      if @post.update_attributes(params.require(:post).permit(:title, :body))
        flash[:notice] = "Post was updated."
        redirect_to @post
