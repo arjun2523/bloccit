@@ -13,7 +13,7 @@ class PostsController < ApplicationController
     authorize @post
   end
   def create
-     @post = current_user.posts.build(params.require(:post).permit(:title, :body))
+     @post = current_user.posts.build(post_params)
      if @post.save
        flash[:notice] = "Post was saved."
        redirect_to @post
@@ -27,7 +27,7 @@ class PostsController < ApplicationController
     authorize @post
   end
   def update
-    @post = Post.find(params[:id])
+     @post = current_user.posts.build(post_params)
     authorize @post
      if @post.update_attributes(params.require(:post).permit(:title, :body))
        flash[:notice] = "Post was updated."
@@ -37,4 +37,9 @@ class PostsController < ApplicationController
        render :edit
     end
   end
+end
+private
+
+def post_params
+  params.require(:post).permit(:title, :body)
 end
