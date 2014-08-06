@@ -10,6 +10,7 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
+    @topic = Topic.find(params[:topic_id])
     authorize @post
   end
   def create
