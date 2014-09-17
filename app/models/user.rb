@@ -3,10 +3,11 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
   :recoverable, :rememberable, :trackable, :validatable, :confirmable
-  has_many :posts
+  has_many :posts, dependent: :destroy
      mount_uploader :avatar, AvatarUploader
-  has_many :comments
-end
- def role?(base_role)
+  has_many :comments, dependent: :destroy
+  has_many :votes, dependent: :destroy
+  def role?(base_role)
    role == base_role.to_s
- end
+  end
+end
